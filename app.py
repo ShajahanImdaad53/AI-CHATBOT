@@ -11,9 +11,24 @@ st.set_page_config(page_title="AI Chatbot", page_icon="🚀", layout="centered")
 # ==============================
 st.markdown("""
 <style>
-    /* Gradient Background Effect */
+    /* Import new fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+    html, body, [class*="css"] {
+        font-family: 'Outfit', sans-serif !important;
+    }
+
+    /* Animated Gradient Background Effect */
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
     .stApp {
-        background: radial-gradient(circle at top right, rgb(20, 30, 48) 0%, rgb(10, 14, 23) 100%);
+        background: linear-gradient(-45deg, #0A0E17, #1A0B2E, #001A33, #0A0E17);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
     }
 
     /* Beautiful Title Gradient */
@@ -21,7 +36,8 @@ st.markdown("""
         background: -webkit-linear-gradient(45deg, #00FF7F, #00BFFF);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Outfit', sans-serif !important;
+        font-weight: 800;
         text-align: center;
         margin-bottom: 25px;
         padding-top: 10px;
@@ -60,7 +76,7 @@ st.markdown("""
         box-shadow: 0 4px 20px rgba(0, 255, 127, 0.3);
     }
 
-    /* Custom colored avatars via text styling if you want text fallbacks to match */
+    /* Custom colored avatars */
     .stChatMessageAvatarUser {
         background-color: #00FF7F;
     }
