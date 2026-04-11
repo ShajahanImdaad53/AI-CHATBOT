@@ -1,0 +1,15 @@
+[theme]
+# Primary accent color for interactive elements
+primaryColor = "#00FF7F"
+
+# Main background color for the app
+backgroundColor = "#0A0E17"
+
+# Background color for sidebar and elements like st.chat_message
+secondaryBackgroundColor = "#151B29"
+
+# Text color
+textColor = "#E2E8F0"
+
+# Font family
+font = "sans serif"
