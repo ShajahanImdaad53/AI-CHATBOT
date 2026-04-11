@@ -2,37 +2,43 @@ import streamlit as st
 from groq import Groq
 from dotenv import load_dotenv
 import os
+import base64
 
 # SET PAGE CONFIG FIRST!
 st.set_page_config(page_title="AI Chatbot", page_icon="🚀", layout="centered")
 
+def get_base64_of_bin_file(bin_file):
+    try:
+        with open(bin_file, 'rb') as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
+    except Exception:
+        return ""
+
+bg_base64 = get_base64_of_bin_file("assets/liquid_bg.png")
+
 # ==============================
-# CSS FOR PREMIUM AESTHETICS 
+# CSS FOR LIQUID GLASS AESTHETICS 
 # ==============================
-st.markdown("""
+st.markdown(f"""
 <style>
     /* Import new fonts */
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
 
-    html, body, [class*="css"] {
+    html, body, [class*="css"] {{
         font-family: 'Outfit', sans-serif !important;
-    }
+    }}
 
-    /* Animated Gradient Background Effect */
-    @keyframes gradientBG {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    .stApp {
-        background: linear-gradient(-45deg, #0A0E17, #1A0B2E, #001A33, #0A0E17);
-        background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
-    }
+    /* Use the generated Liquid Background Image */
+    .stApp {{
+        background-image: url("data:image/png;base64,{bg_base64}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }}
 
     /* Beautiful Title Gradient */
-    h1 {
+    h1 {{
         background: -webkit-linear-gradient(45deg, #00FF7F, #00BFFF);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -41,45 +47,53 @@ st.markdown("""
         text-align: center;
         margin-bottom: 25px;
         padding-top: 10px;
-    }
+        text-shadow: 0px 4px 15px rgba(0, 255, 127, 0.3);
+    }}
 
-    /* Custom Glassmorphism styling for chat messages container */
-    [data-testid="stChatMessage"] {
-        border-radius: 12px;
-        padding: 12px 18px;
+    /* LIQUID GLASS Chat Messages */
+    [data-testid="stChatMessage"] {{
+        border-radius: 16px;
+        padding: 15px 20px;
         margin-bottom: 12px;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-    }
+        /* The liquid glass effect */
+        background: rgba(255, 255, 255, 0.03) !important;
+        backdrop-filter: blur(20px) saturate(120%);
+        -webkit-backdrop-filter: blur(20px) saturate(120%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    }}
     
-    /* User Message distinct style */
-    [data-testid="stChatMessage"]:nth-child(even) {
-        background-color: rgba(0, 255, 127, 0.08);
+    /* User Message slight tint */
+    [data-testid="stChatMessage"]:nth-child(even) {{
         border: 1px solid rgba(0, 255, 127, 0.2);
-    }
+    }}
 
-    /* Assistant Message distinct style */
-    [data-testid="stChatMessage"]:nth-child(odd) {
-        background-color: rgba(0, 191, 255, 0.08);
+    /* Assistant Message slight tint */
+    [data-testid="stChatMessage"]:nth-child(odd) {{
         border: 1px solid rgba(0, 191, 255, 0.2);
-    }
+    }}
 
-    /* Chat input styling */
-    .stChatInputContainer {
+    /* Chat input liquid styling */
+    .stChatInputContainer {{
         border-radius: 24px !important;
-        border: 1px solid rgba(0, 255, 127, 0.5) !important;
-        background-color: rgba(20, 27, 41, 0.9) !important;
-        box-shadow: 0 4px 15px rgba(0, 255, 127, 0.1);
-    }
-    .stChatInputContainer:focus-within {
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        background: rgba(10, 14, 23, 0.6) !important;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    }}
+    .stChatInputContainer:focus-within {{
         border: 1px solid #00FF7F !important;
         box-shadow: 0 4px 20px rgba(0, 255, 127, 0.3);
-    }
+    }}
 
     /* Custom colored avatars */
-    .stChatMessageAvatarUser {
-        background-color: #00FF7F;
-    }
+    .stChatMessageAvatarUser {{
+        background-color: #00FF7F !important;
+    }}
+    .stChatMessageAvatarAssistant {{
+        background-color: #00BFFF !important;
+    }}
 </style>
 """, unsafe_allow_html=True)
 
