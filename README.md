@@ -69,7 +69,7 @@ Make sure you have [Python 3.8+](https://www.python.org/downloads/) installed. Y
 
 5. **Run the App:**
    ```bash
-   streamlit run app.py
+   streamlit run streamlit_app.py
    ```
    > The app should now be running locally at `http://localhost:8501`.
 
@@ -94,7 +94,7 @@ git add .
 #### 3. Commit your Changes
 Label your bundle with a clear, concise message describing what you built:
 ```bash
-git commit -m "Added a cool new feature to app.py"
+git commit -m "Added a cool new feature to streamlit_app.py"
 ```
 
 #### 4. Push to GitHub
