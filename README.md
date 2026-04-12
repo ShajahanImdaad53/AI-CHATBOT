@@ -3,7 +3,7 @@
 # 🌟 Premium AI Chatbot 
 *A modern, colorful, and lightning-fast Conversational UI built with Streamlit and Groq.*
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=https://github.com/ShajahanImdaad53/AI-CHATBOT&branch=main&main_module_filename=app.py)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=https://github.com/ShajahanImdaad53/AI-CHATBOT&branch=main&main_module_filename=streamlit_app.py)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Groq](https://img.shields.io/badge/Groq-Powered-00FF7F?style=flat&logoColor=white)](https://groq.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
