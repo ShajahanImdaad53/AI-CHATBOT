@@ -3,7 +3,7 @@
 # 🌟 Premium AI Chatbot 
 *A modern, colorful, and lightning-fast Conversational UI built with Streamlit and Groq.*
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://streamlit.io)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=https://github.com/ShajahanImdaad53/AI-CHATBOT&branch=main&main_module_filename=app.py)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Groq](https://img.shields.io/badge/Groq-Powered-00FF7F?style=flat&logoColor=white)](https://groq.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -103,6 +103,20 @@ Finally, push your commit securely to the remote repository located at your GitH
 git push origin main
 ```
 > **Note:** If it is your first time pushing from the device, Windows or Mac will spawn an authentication pop-up asking you to authorize via GitHub web-login.
+
+---
+
+## 🚀 Deployment (Live Link)
+
+To get your live link via Streamlit Cloud for free:
+
+1. **GitHub:** Click the **"Deploy to Streamlit"** button at the top of this README.
+2. **Secrets:** In the Streamlit Cloud deployment settings, go to **Advanced Settings -> Secrets**.
+3. **API Key:** Paste your `.env` content or add it manually:
+   ```toml
+   GROQ_API_KEY = "your_key_here"
+   ```
+4. **Deploy:** Click **Deploy** and wait for the "lightning-fast" app to spin up!
 
 ---
 
