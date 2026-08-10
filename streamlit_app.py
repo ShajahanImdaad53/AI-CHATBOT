@@ -208,9 +208,16 @@ st.markdown(custom_css, unsafe_allow_html=True)
 
 # Application Logic
 load_dotenv(override=True)
-api_key = os.getenv("GROQ_API_KEY")
+
+# First try to get the API key from Streamlit secrets, then fallback to environment variables (.env)
+try:
+    api_key = st.secrets.get("GROQ_API_KEY", os.getenv("GROQ_API_KEY"))
+except Exception:
+    api_key = os.getenv("GROQ_API_KEY")
 
 try:
+    if not api_key:
+        raise ValueError("API Key is missing. Please set GROQ_API_KEY in .env or Streamlit secrets.")
     client = Groq(api_key=api_key)
 except Exception as e:
     st.error(f"Error initializing Groq client: {str(e)}")
