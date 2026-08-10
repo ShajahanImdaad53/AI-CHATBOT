@@ -207,13 +207,13 @@ custom_css = f"""
 st.markdown(custom_css, unsafe_allow_html=True)
 
 # Application Logic
-load_dotenv()
+load_dotenv(override=True)
 api_key = os.getenv("GROQ_API_KEY")
 
 try:
     client = Groq(api_key=api_key)
 except Exception as e:
-    st.error("Error initializing Groq client. Check your API key.")
+    st.error(f"Error initializing Groq client: {str(e)}")
     client = None
 
 if "messages" not in st.session_state:
