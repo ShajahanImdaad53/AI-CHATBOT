@@ -33,6 +33,40 @@ custom_css = f"""
     div[data-testid="stChatMessage"] {{ display: none !important; }}
 
     /* =========================================
+       SIDEBAR NAVIGATION STYLING
+       ========================================= */
+    [data-testid="stSidebar"] {{
+        background-color: #09090b !important;
+        border-right: 1px solid rgba(255,255,255,0.05) !important;
+    }}
+    [data-testid="stSidebar"] .stRadio > div[role="radiogroup"] > label {{
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        padding: 14px 20px !important;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }}
+    [data-testid="stSidebar"] .stRadio > div[role="radiogroup"] > label:hover {{
+        background: rgba(217, 70, 239, 0.1);
+        border-color: rgba(217, 70, 239, 0.3);
+        transform: translateY(-2px);
+    }}
+    /* Hide default radio circle */
+    [data-testid="stSidebar"] .stRadio > div[role="radiogroup"] > label > div:first-child {{
+        display: none !important; 
+    }}
+    [data-testid="stSidebar"] .stRadio > div[role="radiogroup"] {{
+        gap: 0px !important;
+    }}
+
+    /* =========================================
        MOBILE VIEW (NEON APP CLONE)
        ========================================= */
     @media (max-width: 767px) {{

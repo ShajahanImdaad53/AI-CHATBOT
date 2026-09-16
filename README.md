@@ -1,5 +1,8 @@
 # ✨ Imdu AI
 
+<p align="center">
+  <img src="assets/cover.jpg" alt="Imdu AI Interface" width="600"/>
+</p>
 ![Imdu AI](https://img.shields.io/badge/Imdu%20AI-Chatbot-purple?style=for-the-badge)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 ![Gemini](https://img.shields.io/badge/Gemini_3.5_Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)
