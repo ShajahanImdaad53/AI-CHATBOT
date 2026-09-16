@@ -52,8 +52,29 @@ custom_css = f"""
         display: flex;
         justify-content: center;
     }}
-    .block-container {{
-        max-width: 600px !important; /* Mobile width feel */
+    
+    /* Responsive Desktop/Mobile Views */
+    @media (min-width: 768px) {{
+        .block-container {{
+            max-width: 900px !important; /* Desktop width */
+        }}
+        .glass-chat-window {{
+            border-radius: 20px;
+            height: 80vh;
+        }}
+    }}
+    @media (max-width: 767px) {{
+        .block-container {{
+            max-width: 100% !important; /* Mobile width */
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }}
+        .glass-chat-window {{
+            border-radius: 0px; /* Flush to edges on mobile */
+            height: 85vh;
+            border-left: none;
+            border-right: none;
+        }}
     }}
 
     /* THE GLASS CHAT WINDOW */
