@@ -22,11 +22,58 @@ def get_base64_of_bin_file(bin_file):
 
 bg_base64 = get_base64_of_bin_file("assets/liquid_bg.png")
 
+with st.sidebar:
+    st.markdown("<h1 style='text-align: center; font-size: 32px; font-weight: 800; background: -webkit-linear-gradient(#d946ef, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>✨ Imdu AI</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #888; font-size: 14px; margin-bottom: 20px;'>Your Multimodal Assistant</p>", unsafe_allow_html=True)
+    is_dark_mode = st.toggle("🌙 Dark Mode", value=True)
+
+theme_vars = """
+:root {
+    --bg-sidebar: #09090b;
+    --bg-mobile: #000000;
+    --bg-mobile-gradient: radial-gradient(circle at 0% 0%, #3a005c 0%, #000000 40%);
+    --bg-desktop: #131314;
+    --text-main: #ffffff;
+    --text-bot: #D4D4D4;
+    --text-bot-desktop: #e3e3e3;
+    --border-subtle: rgba(255,255,255,0.05);
+    --border-input: rgba(255,255,255,0.2);
+    --bg-input-mobile: rgba(10, 10, 15, 0.9);
+    --bg-input-desktop: #1e1f20;
+    --bg-bot-mobile: #1C1C1E;
+    --bg-user-desktop: #282a2c;
+    --radio-bg: rgba(255, 255, 255, 0.05);
+    --radio-border: rgba(255, 255, 255, 0.1);
+    --text-user-desktop: #e3e3e3;
+}
+""" if is_dark_mode else """
+:root {
+    --bg-sidebar: #f9fafb;
+    --bg-mobile: #ffffff;
+    --bg-mobile-gradient: radial-gradient(circle at 0% 0%, #f3e8ff 0%, #ffffff 40%);
+    --bg-desktop: #ffffff;
+    --text-main: #111827;
+    --text-bot: #374151;
+    --text-bot-desktop: #111827;
+    --border-subtle: rgba(0,0,0,0.1);
+    --border-input: rgba(0,0,0,0.2);
+    --bg-input-mobile: rgba(255, 255, 255, 0.9);
+    --bg-input-desktop: #f3f4f6;
+    --bg-bot-mobile: #f3f4f6;
+    --bg-user-desktop: #e5e7eb;
+    --radio-bg: rgba(0, 0, 0, 0.05);
+    --radio-border: rgba(0, 0, 0, 0.1);
+    --text-user-desktop: #111827;
+}
+"""
+
 # ==============================
 # CUSTOM HTML BUBBLE ARCHITECTURE
 # ==============================
 custom_css = f"""
 <style>
+    {theme_vars}
+    
     /* Import new fonts */
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&display=swap');
     
@@ -37,15 +84,15 @@ custom_css = f"""
        SIDEBAR NAVIGATION STYLING
        ========================================= */
     [data-testid="stSidebar"] {{
-        background-color: #09090b !important;
-        border-right: 1px solid rgba(255,255,255,0.05) !important;
+        background-color: var(--bg-sidebar) !important;
+        border-right: 1px solid var(--border-subtle) !important;
     }}
     [data-testid="stSidebar"] label[data-baseweb="radio"] {{
         font-size: 16px !important;
         font-weight: 600 !important;
         padding: 16px 20px !important;
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        background: var(--radio-bg) !important;
+        border: 1px solid var(--radio-border) !important;
         border-radius: 12px !important;
         margin-bottom: 12px !important;
         transition: all 0.3s ease !important;
@@ -53,7 +100,7 @@ custom_css = f"""
         width: 100% !important;
         display: flex !important;
         align-items: center !important;
-        color: #ffffff !important;
+        color: var(--text-main) !important;
     }}
     [data-testid="stSidebar"] label[data-baseweb="radio"]:hover {{
         background: rgba(217, 70, 239, 0.2) !important;
@@ -77,11 +124,11 @@ custom_css = f"""
     @media (max-width: 767px) {{
         html, body, [class*="css"] {{
             font-family: 'Outfit', sans-serif !important;
-            background-color: #000000 !important;
+            background-color: var(--bg-mobile) !important;
         }}
 
         .stApp {{
-            background: radial-gradient(circle at 0% 0%, #3a005c 0%, #000000 40%);
+            background: var(--bg-mobile-gradient);
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -108,12 +155,12 @@ custom_css = f"""
             justify-content: space-between;
             align-items: center;
             padding: 15px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--border-subtle);
             background: transparent;
         }}
-        .header-left, .header-right {{ color: white; font-size: 20px; }}
+        .header-left, .header-right {{ color: var(--text-main); font-size: 20px; }}
         .header-center {{ display: flex; flex-direction: column; align-items: center; }}
-        .header-center h2 {{ margin: 0; font-size: 1.1rem; font-weight: 600; color: #ffffff; }}
+        .header-center h2 {{ margin: 0; font-size: 1.1rem; font-weight: 600; color: var(--text-main); }}
         .header-center span {{ font-size: 0.8rem; color: #A3A3A3; }}
 
         .messages-container {{
@@ -137,7 +184,7 @@ custom_css = f"""
 
         .chat-bubble {{
             padding: 15px;
-            font-size: 15px;
+            font-size: 18px; /* Increased font size */
             line-height: 1.4;
             position: relative;
         }}
@@ -147,10 +194,10 @@ custom_css = f"""
             color: #ffffff;
         }}
         .chat-bubble.bot {{
-            background: #1C1C1E;
+            background: var(--bg-bot-mobile);
             border-radius: 20px 20px 20px 5px; 
-            border: 1px solid rgba(255,255,255,0.05);
-            color: #D4D4D4;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-bot);
         }}
 
         .bot-actions {{
@@ -158,7 +205,7 @@ custom_css = f"""
             gap: 15px;
             margin-top: 10px;
             padding-top: 10px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid var(--border-subtle);
             color: #888;
             font-size: 16px;
         }}
@@ -177,8 +224,8 @@ custom_css = f"""
 
         .stChatInputContainer {{
             border-radius: 40px !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            background: rgba(10, 10, 15, 0.9) !important;
+            border: 1px solid var(--border-input) !important;
+            background: var(--bg-input-mobile) !important;
             padding: 0 15px;
             margin: 0 10px 20px 10px;
         }}
@@ -191,10 +238,10 @@ custom_css = f"""
     @media (min-width: 768px) {{
         html, body, [class*="css"] {{
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-            background-color: #131314 !important;
+            background-color: var(--bg-desktop) !important;
         }}
         
-        .stApp {{ background: #131314 !important; }}
+        .stApp {{ background: var(--bg-desktop) !important; }}
         .stApp > header {{ background-color: transparent; }}
 
         .main {{ padding-top: 2rem !important; display: flex; justify-content: center; }}
@@ -230,12 +277,13 @@ custom_css = f"""
         .msg-wrapper.left {{ align-self: flex-start; }}
 
         .chat-bubble {{
-            font-size: 16px;
+            font-size: 18px; /* Increased font size */
             line-height: 1.6;
-            color: #e3e3e3;
+            color: var(--text-bot-desktop);
         }}
         .chat-bubble.user {{
-            background: #282a2c;
+            background: var(--bg-user-desktop);
+            color: var(--text-user-desktop);
             border-radius: 24px;
             padding: 12px 24px;
         }}
@@ -258,23 +306,34 @@ custom_css = f"""
         }}
         .avatar.user-avatar {{ display: none; }}
         .avatar.bot-avatar {{ 
-            background: #1e1f20; 
+            background: var(--bg-input-desktop); 
             color: #a8c7fa; 
             font-size: 20px;
         }}
 
         .stChatInputContainer {{
-            background: #1e1f20 !important;
-            border: 1px solid #444 !important;
+            background: var(--bg-input-desktop) !important;
+            border: 1px solid var(--border-input) !important;
             border-radius: 30px !important;
             box-shadow: none !important;
             padding: 0 15px;
+        }}
+        
+        /* Fix standard text colors in desktop view for markdown blocks */
+        .chat-bubble.bot p, .chat-bubble.bot h1, .chat-bubble.bot h2, .chat-bubble.bot h3, .chat-bubble.bot li {{
+            color: var(--text-bot-desktop) !important;
+        }}
+        
+        /* Fix text color for input container placeholder */
+        .stChatInputContainer textarea {{
+            color: var(--text-bot-desktop) !important;
         }}
     }}
 </style>
 """
 
 st.markdown(custom_css, unsafe_allow_html=True)
+
 
 # Application Logic
 load_dotenv(override=True)
@@ -299,8 +358,7 @@ if "pdf_context" not in st.session_state:
     st.session_state.pdf_context = ""
 
 with st.sidebar:
-    st.markdown("<h1 style='text-align: center; font-size: 32px; font-weight: 800; background: -webkit-linear-gradient(#d946ef, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>✨ Imdu AI</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #888; font-size: 14px; margin-bottom: 20px;'>Your Multimodal Assistant</p>", unsafe_allow_html=True)
+    # Sidebar header is now handled above where we initialized the toggle
     
     feature = option_menu(
         menu_title=None,
