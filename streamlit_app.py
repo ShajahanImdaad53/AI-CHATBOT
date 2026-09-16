@@ -311,7 +311,7 @@ elif feature in ["Chat", "PDF Q&A"]:
                     contents.append({"role": role, "parts": [{"text": m["content"]}]})
 
                 response = client.models.generate_content(
-                    model='gemini-1.5-pro',
+                    model='gemini-2.5-pro',
                     contents=contents,
                     config=types.GenerateContentConfig(
                         system_instruction=system_instruction,
