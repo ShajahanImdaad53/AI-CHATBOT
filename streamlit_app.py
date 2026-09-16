@@ -39,7 +39,7 @@ custom_css = f"""
         background-color: #09090b !important;
         border-right: 1px solid rgba(255,255,255,0.05) !important;
     }}
-    [data-testid="stSidebar"] div[role="radiogroup"] > label {{
+    [data-testid="stSidebar"] label[data-baseweb="radio"] {{
         font-size: 16px !important;
         font-weight: 600 !important;
         padding: 16px 20px !important;
@@ -54,13 +54,13 @@ custom_css = f"""
         align-items: center !important;
         color: #ffffff !important;
     }}
-    [data-testid="stSidebar"] div[role="radiogroup"] > label:hover {{
+    [data-testid="stSidebar"] label[data-baseweb="radio"]:hover {{
         background: rgba(217, 70, 239, 0.2) !important;
         border-color: rgba(217, 70, 239, 0.5) !important;
         transform: translateY(-2px) !important;
     }}
     /* Hide default radio circle */
-    [data-testid="stSidebar"] div[role="radiogroup"] > label > div:first-child {{
+    [data-testid="stSidebar"] label[data-baseweb="radio"] > div:first-child {{
         display: none !important; 
     }}
     [data-testid="stSidebar"] div[role="radiogroup"] {{
