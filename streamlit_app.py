@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 import os
 import base64
 from datetime import datetime
-import PyPDF2
-import urllib.parse
+import pypdf
+from urllib.parse import quote
 
 # SET PAGE CONFIG FIRST!
 st.set_page_config(page_title="Imdu AI", page_icon="🤖", layout="wide")
@@ -227,7 +227,7 @@ if feature == "PDF Q&A":
     uploaded_file = st.sidebar.file_uploader("Upload a PDF document", type=["pdf"])
     if uploaded_file is not None:
         try:
-            pdf_reader = PyPDF2.PdfReader(uploaded_file)
+            pdf_reader = pypdf.PdfReader(uploaded_file)
             text = ""
             for page in pdf_reader.pages:
                 extracted = page.extract_text()
@@ -243,7 +243,7 @@ if feature == "Image Generation":
     st.markdown("Generate images instantly using Pollinations AI.")
     img_prompt = st.text_input("Enter your image prompt:", placeholder="E.g., A futuristic cyberpunk city at sunset")
     if img_prompt:
-        encoded_prompt = urllib.parse.quote(img_prompt)
+        encoded_prompt = quote(img_prompt)
         image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}"
         with st.spinner("Generating image..."):
             st.image(image_url, caption=img_prompt, use_column_width=True)
