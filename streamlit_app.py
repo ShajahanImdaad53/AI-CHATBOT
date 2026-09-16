@@ -296,7 +296,7 @@ elif feature in ["Chat", "PDF Q&A"]:
         st.rerun()
 
     # Generation Step
-    if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
+    if st.session_state.messages and st.session_state.messages[-1]["role"] == "user" and client:
         try:
             with st.spinner("Imdu AI is typing..."):
                 system_prompt = {
