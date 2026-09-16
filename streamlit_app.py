@@ -280,13 +280,37 @@ if feature == "PDF Q&A":
 
 if feature == "Image Generation":
     st.markdown("## 🎨 AI Image Generation")
-    st.markdown("Generate images instantly using Pollinations AI.")
-    img_prompt = st.text_input("Enter your image prompt:", placeholder="E.g., A futuristic cyberpunk city at sunset")
+    st.markdown("Generate sharp, high-quality images instantly.")
+    
+    style_col, prompt_col = st.columns([1, 3])
+    with style_col:
+        img_style = st.selectbox("Choose a Style:", [
+            "Realistic (High Quality)", 
+            "Pencil Sketch", 
+            "Pen Drawing", 
+            "Watercolor"
+        ])
+    with prompt_col:
+        img_prompt = st.text_input("Enter your image prompt:", placeholder="E.g., A futuristic cyberpunk city")
+        
     if img_prompt:
-        encoded_prompt = quote(img_prompt)
-        image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}"
-        with st.spinner("Generating image..."):
-            st.image(image_url, caption=img_prompt, use_container_width=True)
+        style_modifiers = ""
+        if img_style == "Realistic (High Quality)":
+            style_modifiers = ", highly detailed, sharp focus, 8k resolution, photorealistic, masterpiece"
+        elif img_style == "Pencil Sketch":
+            style_modifiers = ", detailed pencil sketch, graphite, shading, fine lines, sharp"
+        elif img_style == "Pen Drawing":
+            style_modifiers = ", detailed pen and ink drawing, crosshatching, sharp ink lines, masterpiece"
+        elif img_style == "Watercolor":
+            style_modifiers = ", beautiful watercolor painting, vibrant colors, artistic, sharp brush strokes"
+            
+        final_prompt = f"{img_prompt}{style_modifiers}"
+        encoded_prompt = quote(final_prompt)
+        
+        image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1024&height=1024&nologo=true&enhance=true"
+        
+        with st.spinner(f"Generating {img_style.lower()}..."):
+            st.image(image_url, caption=f"{img_prompt} ({img_style})", use_container_width=True)
 
 elif feature in ["Chat", "PDF Q&A"]:
     # Generate custom HTML for the overarching chat window
