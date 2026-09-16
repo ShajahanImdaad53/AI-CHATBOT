@@ -24,7 +24,7 @@ bg_base64 = get_base64_of_bin_file("assets/liquid_bg.png")
 
 with st.sidebar:
     st.markdown("<h1 style='text-align: center; font-size: 32px; font-weight: 800; background: -webkit-linear-gradient(#d946ef, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>✨ Imdu AI</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #888; font-size: 14px; margin-bottom: 20px;'>Your Multimodal Assistant</p>", unsafe_allow_html=True)
+    st.markdown("<p class='sidebar-subtitle' style='text-align: center; font-size: 14px; margin-bottom: 20px;'>Your Multimodal Assistant</p>", unsafe_allow_html=True)
     is_dark_mode = st.toggle("🌙 Dark Mode", value=True)
 
 theme_vars = """
@@ -79,6 +79,35 @@ custom_css = f"""
     
     /* Make standard Streamlit Markdown completely invisible to prevent ghosting */
     div[data-testid="stChatMessage"] {{ display: none !important; }}
+
+    /* Force all standard typography to match our theme */
+    .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6, .stApp p, .stApp label, .stApp span, .stApp li {{
+        color: var(--text-main) !important;
+    }}
+    
+    /* Exception for the muted subtitle in the sidebar */
+    .sidebar-subtitle {{
+        color: var(--text-bot) !important;
+    }}
+    
+    /* Native Input elements */
+    [data-testid="stTextInput"] input, 
+    [data-testid="stSelectbox"] div[data-baseweb="select"] {{
+        background-color: var(--bg-input-desktop) !important;
+        color: var(--text-main) !important;
+        border-color: var(--border-input) !important;
+    }}
+    
+    /* Uploader */
+    [data-testid="stFileUploader"] section {{
+        background-color: var(--bg-input-desktop) !important;
+        color: var(--text-main) !important;
+    }}
+
+    /* Option Menu styling */
+    .streamlit-option-menu .nav-link {{
+        color: var(--text-main) !important;
+    }}
 
     /* =========================================
        SIDEBAR NAVIGATION STYLING
@@ -374,7 +403,8 @@ with st.sidebar:
                 "font-weight": "bold", 
                 "text-align": "left", 
                 "margin": "0px", 
-                "--hover-color": "rgba(217, 70, 239, 0.1)"
+                "--hover-color": "rgba(217, 70, 239, 0.1)",
+                "color": "#ffffff" if is_dark_mode else "#111827"
             },
             "nav-link-selected": {"background-color": "rgba(217, 70, 239, 0.2)", "color": "#d946ef"},
         }
