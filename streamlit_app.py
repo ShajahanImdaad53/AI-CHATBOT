@@ -246,7 +246,7 @@ if feature == "Image Generation":
         encoded_prompt = quote(img_prompt)
         image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}"
         with st.spinner("Generating image..."):
-            st.image(image_url, caption=img_prompt, use_column_width=True)
+            st.image(image_url, caption=img_prompt, use_container_width=True)
 
 elif feature in ["Chat", "PDF Q&A"]:
     # Generate custom HTML for the overarching chat window
