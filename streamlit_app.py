@@ -1,5 +1,6 @@
 import streamlit as st
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from dotenv import load_dotenv
 import os
 import base64
@@ -208,8 +209,7 @@ except Exception:
 try:
     if not api_key:
         raise ValueError("API Key is missing. Please set GEMINI_API_KEY in .env or Streamlit secrets.")
-    genai.configure(api_key=api_key)
-    client = True
+    client = genai.Client(api_key=api_key)
 except Exception as e:
     st.error(f"Error initializing Gemini client: {str(e)}")
     client = None
@@ -305,18 +305,19 @@ elif feature in ["Chat", "PDF Q&A"]:
                 if st.session_state.pdf_context:
                     system_instruction += f"\n\nHere is context from an uploaded document that the user might refer to:\n{st.session_state.pdf_context}"
 
-                model = genai.GenerativeModel(
-                    model_name="gemini-1.5-pro",
-                    system_instruction=system_instruction
-                )
-
                 contents = []
                 for m in st.session_state.messages:
                     role = "user" if m["role"] == "user" else "model"
-                    contents.append({"role": role, "parts": [m["content"]]})
+                    contents.append({"role": role, "parts": [{"text": m["content"]}]})
 
-                res = model.generate_content(contents)
-                reply = res.text
+                response = client.models.generate_content(
+                    model='gemini-1.5-pro',
+                    contents=contents,
+                    config=types.GenerateContentConfig(
+                        system_instruction=system_instruction,
+                    )
+                )
+                reply = response.text
             
             current_time = datetime.now().strftime("%I:%M %p")
             st.session_state.messages.append({"role": "assistant", "content": reply, "time": current_time})
