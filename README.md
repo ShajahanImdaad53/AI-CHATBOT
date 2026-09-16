@@ -1,125 +1,69 @@
-<div align="center">
+# ✨ Imdu AI
 
-# 🌟 Premium AI Chatbot 
-*A modern, colorful, and lightning-fast Conversational UI built with Streamlit and Groq.*
+![Imdu AI](https://img.shields.io/badge/Imdu%20AI-Chatbot-purple?style=for-the-badge)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini_3.5_Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=https://github.com/ShajahanImdaad53/AI-CHATBOT&branch=main&main_module_filename=streamlit_app.py)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![Groq](https://img.shields.io/badge/Groq-Powered-00FF7F?style=flat&logoColor=white)](https://groq.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+**Imdu AI** is an advanced, multi-modal AI assistant created by **Imdaad Shajahan**. Built entirely with Python and Streamlit, it features a completely custom, fully responsive User Interface that adapts seamlessly between desktop and mobile devices.
 
-</div>
+## 🌟 Key Features
 
----
+### 💬 Intelligent Chat (Gemini 3.5 Flash)
+- Powered by the lightning-fast `gemini-3.5-flash` model using the newest `google-genai` SDK.
+- Retains conversational memory for natural dialogue.
+- **Strict Safety Guards:** Built-in SDK safety settings aggressively block sexually explicit, harassing, hate speech, and dangerous content.
 
-## 🎨 UI Preview
+### 📄 Document Analysis (PDF Q&A)
+- Upload any PDF document.
+- Imdu AI automatically extracts the text using `pypdf` and stores it in context.
+- You can instantly ask questions, summarize, or extract specific data points from the uploaded document directly within the chat interface.
 
-Here is a glimpse of the premium aesthetic design featured in this chatbot, which includes an animated gradient background, sleek typography, and glassmorphism UI elements:
+### 🎨 High-Definition Image Generation
+- Instantly generate sharp, `1024x1024` resolution images using Pollinations AI.
+- **Built-in Style Selector:**
+  - 📸 **Realistic (High Quality):** Photorealistic, 8k resolution masterpieces.
+  - ✏️ **Pencil Sketch:** Detailed graphite drawings with fine shading.
+  - 🖋️ **Pen Drawing:** Crisp, crosshatched pen and ink art.
+  - 🖌️ **Watercolor:** Beautiful, artistic brush strokes with vibrant colors.
 
-![AI Chatbot UI Preview](assets/demo.png)
+## 📱 Adaptive UI Design
 
-## 🚀 About The Project
+Imdu AI abandons standard Streamlit styling for a highly custom, CSS-driven responsive design:
 
-This is a **High-Performance AI Chatbot Application**. It interfaces directly with **LLaMA 3.1 (8B)** models via the blazing-fast **Groq API** inference layer. 
+*   **Mobile View (< 768px):** A premium, native-app experience featuring a pitch-black background with a neon purple radial glow. User messages are vibrant pink-to-purple diagonal gradient bubbles, while the bot uses sleek `#1C1C1E` dark grey bubbles. Includes custom avatars and a glowing pill-shaped input bar.
+*   **Desktop View (>= 768px):** Automatically switches to a clean, professional workspace mimicking the official Google Gemini interface. Features a flat `#131314` dark background, subtle `#282a2c` grey user bubbles, transparent bot text, and standard alignment.
 
-But it's not just fast—it's beautifully designed. Moving away from the generic vanilla layouts, this application features custom CSS overrides that apply a heavily stylized layout.
+## ⚙️ Installation & Setup
 
-### ✨ Key Features
-- **Glassmorphism UI:** Blurred chat container backdrops that adapt dynamically to the background.
-- **Animated Gradients:** A living, breathing background that smoothly transitions 15 seconds through an infinite loop of dark navy and sky blue color palettes.
-- **Modern Typography:** Implements the breathtakingly sleek **Outfit** font hosted straight from Google Fonts.
-- **Instant Response Times:** Groq's LPU architecture provides instant token generation for the Llama-3.1-8b model.
-
----
-
-## 🛠️ Getting Started
-
-To get a local instance up and running on your device, follow these steps:
-
-### Prerequisites
-Make sure you have [Python 3.8+](https://www.python.org/downloads/) installed. You will also need to claim a free API key from [Groq Cloud](https://console.groq.com/).
-
-### Installation
-
-1. **Clone the repository:**
+1. **Clone the repository**
    ```bash
    git clone https://github.com/ShajahanImdaad53/AI-CHATBOT.git
    cd AI-CHATBOT
    ```
 
-2. **Set up your Virtual Environment (Recommended):**
-   ```bash
-   python -m venv venv
-   # On Windows:
-   .\venv\Scripts\activate
-   # On Mac/Linux:
-   source venv/bin/activate
-   ```
-
-3. **Install the Requirements:**
+2. **Install dependencies**
+   Make sure you have Python installed, then run:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Environment Variables:**
-   Create a `.env` file in the root directory if it's not there, and add your API key:
+3. **Set up your API Key**
+   Create a `.env` file in the root directory and add your Google Gemini API key:
    ```env
-   GROQ_API_KEY="your-groq-api-key-here"
+   GEMINI_API_KEY=your_api_key_here
    ```
+   *(Alternatively, if deploying to Streamlit Cloud, add the key to your App Secrets).*
 
-5. **Run the App:**
+4. **Run the app**
    ```bash
    streamlit run streamlit_app.py
    ```
-   > The app should now be running locally at `http://localhost:8501`.
+
+## 🛠️ Tech Stack
+- **Frontend/Backend:** [Streamlit](https://streamlit.io/)
+- **LLM Integration:** [Google GenAI SDK](https://ai.google.dev/)
+- **PDF Processing:** [pypdf](https://pypi.org/project/pypdf/)
+- **Image Generation:** [Pollinations AI](https://pollinations.ai/)
 
 ---
-
-## 🌳 Git Details & Workflow
-
-Since you are maintaining this code natively in the `main` branch, here are the essential Git commands to update your live repository whenever you make local modifications:
-
-#### 1. Check your work status
-To see what files you have altered:
-```bash
-git status
-```
-
-#### 2. Stage All Changes
-Bundle all your new features and file changes together:
-```bash
-git add .
-```
-
-#### 3. Commit your Changes
-Label your bundle with a clear, concise message describing what you built:
-```bash
-git commit -m "Added a cool new feature to streamlit_app.py"
-```
-
-#### 4. Push to GitHub
-Finally, push your commit securely to the remote repository located at your GitHub URL:
-```bash
-git push origin main
-```
-> **Note:** If it is your first time pushing from the device, Windows or Mac will spawn an authentication pop-up asking you to authorize via GitHub web-login.
-
----
-
-## 🚀 Deployment (Live Link)
-
-To get your live link via Streamlit Cloud for free:
-
-1. **GitHub:** Click the **"Deploy to Streamlit"** button at the top of this README.
-2. **Secrets:** In the Streamlit Cloud deployment settings, go to **Advanced Settings -> Secrets**.
-3. **API Key:** Paste your `.env` content or add it manually:
-   ```toml
-   GROQ_API_KEY = "your_key_here"
-   ```
-4. **Deploy:** Click **Deploy** and wait for the "lightning-fast" app to spin up!
-
----
-
-<div align="center">
-  <i>Developed with ❤️ using Python and Streamlit</i>
-</div>
+*Developed with ❤️ by Imdaad Shajahan.*
