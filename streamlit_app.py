@@ -4,9 +4,11 @@ from dotenv import load_dotenv
 import os
 import base64
 from datetime import datetime
+import PyPDF2
+import urllib.parse
 
 # SET PAGE CONFIG FIRST!
-st.set_page_config(page_title="AI Assistant", page_icon="🤖", layout="wide")
+st.set_page_config(page_title="Imdu AI", page_icon="🤖", layout="wide")
 
 def get_base64_of_bin_file(bin_file):
     try:
@@ -149,18 +151,6 @@ custom_css = f"""
         box-shadow: 0 0 15px rgba(0, 255, 127, 0.05);
     }}
 
-    /* LABELS */
-    .user-label {{
-        color: #00BFFF;
-        font-weight: 600;
-        margin-right: 8px;
-    }}
-    .bot-label {{
-        color: #00FF7F;
-        font-weight: 600;
-        margin-right: 8px;
-    }}
-
     /* TIMESTAMP */
     .timestamp {{
         font-size: 12px;
@@ -225,11 +215,43 @@ except Exception as e:
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
+if "pdf_context" not in st.session_state:
+    st.session_state.pdf_context = ""
 
-# Generate custom HTML for the overarching chat window
-html_content = """<div class="glass-chat-window">
+st.sidebar.title("✨ Imdu AI Features")
+feature = st.sidebar.radio("Navigate", ["Chat", "PDF Q&A", "Image Generation"])
+
+if feature == "PDF Q&A":
+    st.sidebar.markdown("---")
+    uploaded_file = st.sidebar.file_uploader("Upload a PDF document", type=["pdf"])
+    if uploaded_file is not None:
+        try:
+            pdf_reader = PyPDF2.PdfReader(uploaded_file)
+            text = ""
+            for page in pdf_reader.pages:
+                extracted = page.extract_text()
+                if extracted:
+                    text += extracted + "\n"
+            st.session_state.pdf_context = text
+            st.sidebar.success("PDF processed successfully! You can now ask questions about it in the chat.")
+        except Exception as e:
+            st.sidebar.error(f"Error processing PDF: {e}")
+
+if feature == "Image Generation":
+    st.markdown("## 🎨 AI Image Generation")
+    st.markdown("Generate images instantly using Pollinations AI.")
+    img_prompt = st.text_input("Enter your image prompt:", placeholder="E.g., A futuristic cyberpunk city at sunset")
+    if img_prompt:
+        encoded_prompt = urllib.parse.quote(img_prompt)
+        image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}"
+        with st.spinner("Generating image..."):
+            st.image(image_url, caption=img_prompt, use_column_width=True)
+
+elif feature in ["Chat", "PDF Q&A"]:
+    # Generate custom HTML for the overarching chat window
+    html_content = """<div class="glass-chat-window">
 <div class="chat-header">
-<h2>AI Assistant</h2>
+<h2>Imdu AI</h2>
 <div class="header-right">
 <div class="status-text"><span class="status-dot"></span> Online</div>
 </div>
@@ -237,59 +259,69 @@ html_content = """<div class="glass-chat-window">
 <div class="messages-container" id="chatbox">
 """
 
-def generate_message_html(role, content, time_str):
-    if role == "user":
-        return f"""<div class="msg-wrapper right">
+    def generate_message_html(role, content, time_str):
+        if role == "user":
+            return f"""<div class="msg-wrapper right">
 <div class="chat-bubble user">
-<span class="user-label">User:</span>{content}
+{content}
 </div>
 <div class="timestamp">{time_str}</div>
 </div>"""
-    else:
-        return f"""<div class="msg-wrapper left">
+        else:
+            return f"""<div class="msg-wrapper left">
 <div class="chat-bubble bot">
-<span class="bot-label">AI Chatbot:</span>{content}
+{content}
 </div>
 <div class="timestamp">{time_str}</div>
 </div>"""
 
-# Render history explicitly
-for ms in st.session_state.messages:
-    time_str = ms.get("time", datetime.now().strftime("%I:%M %p"))
-    html_content += generate_message_html(ms["role"], ms["content"], time_str)
+    # Render history explicitly
+    for ms in st.session_state.messages:
+        time_str = ms.get("time", datetime.now().strftime("%I:%M %p"))
+        html_content += generate_message_html(ms["role"], ms["content"], time_str)
 
-html_content += """</div>
+    html_content += """</div>
 </div>"""
 
-# Render the single massive HTML layout
-st.markdown(html_content, unsafe_allow_html=True)
+    # Render the single massive HTML layout
+    st.markdown(html_content, unsafe_allow_html=True)
 
-# Process User Input
-prompt = st.chat_input("Type your message here...")
+    # Process User Input
+    prompt = st.chat_input("Type your message here...")
 
-if prompt and client:
-    current_time = datetime.now().strftime("%I:%M %p")
-    # Quick UX Trick: Add message and immediately rerun script to force HTML redrawing
-    st.session_state.messages.append({"role": "user", "content": prompt, "time": current_time})
-    st.rerun()
-
-# Generation Step
-if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
-    try:
-        with st.spinner("AI is typing..."):
-            res = client.chat.completions.create(
-                model="llama-3.1-8b-instant",
-                messages=[
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ],
-            )
-            reply = res.choices[0].message.content
-        
+    if prompt and client:
         current_time = datetime.now().strftime("%I:%M %p")
-        st.session_state.messages.append({"role": "assistant", "content": reply, "time": current_time})
+        # Quick UX Trick: Add message and immediately rerun script to force HTML redrawing
+        st.session_state.messages.append({"role": "user", "content": prompt, "time": current_time})
         st.rerun()
 
-    except Exception as e:
-        error_msg = f"Error occurred: {str(e)}"
-        st.error(error_msg)
+    # Generation Step
+    if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
+        try:
+            with st.spinner("Imdu AI is typing..."):
+                system_prompt = {
+                    "role": "system", 
+                    "content": "Your name is Imdu AI. You were created by Imdaad Shajahan. Do not mention Meta or any other creator. Be helpful and intelligent."
+                }
+                
+                if st.session_state.pdf_context:
+                    system_prompt["content"] += f"\n\nHere is context from an uploaded document that the user might refer to:\n{st.session_state.pdf_context}"
+
+                messages_for_api = [system_prompt] + [
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ]
+
+                res = client.chat.completions.create(
+                    model="llama3-8b-8192",
+                    messages=messages_for_api,
+                )
+                reply = res.choices[0].message.content
+            
+            current_time = datetime.now().strftime("%I:%M %p")
+            st.session_state.messages.append({"role": "assistant", "content": reply, "time": current_time})
+            st.rerun()
+
+        except Exception as e:
+            error_msg = f"Error occurred: {str(e)}"
+            st.error(error_msg)
