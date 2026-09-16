@@ -31,11 +31,12 @@ custom_css = f"""
 
     html, body, [class*="css"] {{
         font-family: 'Outfit', sans-serif !important;
+        background-color: #000000 !important;
     }}
 
-    /* Deep Space Background */
+    /* Solid Black with top-left purple glow */
     .stApp {{
-        background-image: url("data:image/png;base64,{bg_base64}");
+        background: radial-gradient(circle at 0% 0%, #3a005c 0%, #000000 40%);
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -52,69 +53,64 @@ custom_css = f"""
         justify-content: center;
     }}
     .block-container {{
-        max-width: 900px !important;
+        max-width: 600px !important; /* Mobile width feel */
     }}
 
     /* THE GLASS CHAT WINDOW */
     .glass-chat-window {{
-        background: rgba(20, 25, 45, 0.4);
-        backdrop-filter: blur(25px) saturate(120%);
-        -webkit-backdrop-filter: blur(25px) saturate(120%);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: transparent;
         border-radius: 20px;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-        overflow: hidden;
         display: flex;
         flex-direction: column;
         margin-bottom: 90px;
-        height: 75vh;
+        height: 80vh;
     }}
 
-    /* HEADER */
+    /* HEADER - exact match */
     .chat-header {{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px 30px;
+        padding: 15px 10px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        background: rgba(0, 0, 0, 0.2);
+        background: transparent;
     }}
-    .chat-header h2 {{
-        margin: 0;
-        font-size: 1.6rem;
-        font-weight: 500;
-        color: #ffffff;
-        text-shadow: 0px 2px 10px rgba(255,255,255,0.1);
-    }}
-    .header-right {{
+    .header-left {{
         display: flex;
         align-items: center;
         gap: 15px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
     }}
-    .status-dot {{
-        height: 10px;
-        width: 10px;
-        background-color: #00FF7F;
-        border-radius: 50%;
-        display: inline-block;
-        box-shadow: 0 0 10px #00FF7F;
-    }}
-    .status-text {{
-        color: #00FF7F;
-        font-weight: 400;
-        font-size: 15px;
+    .header-center {{
         display: flex;
+        flex-direction: column;
         align-items: center;
-        gap: 8px;
+    }}
+    .header-center h2 {{
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #ffffff;
+    }}
+    .header-center span {{
+        font-size: 0.8rem;
+        color: #A3A3A3;
+    }}
+    .header-right {{
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
     }}
 
     /* MESSAGES AREA */
     .messages-container {{
-        padding: 30px;
+        padding: 20px 10px;
         overflow-y: auto;
         display: flex;
         flex-direction: column;
-        gap: 25px;
+        gap: 15px;
         height: 100%;
         overflow-x: hidden;
     }}
@@ -122,11 +118,14 @@ custom_css = f"""
     /* BUBBLE WRAPPERS */
     .msg-wrapper {{
         display: flex;
-        flex-direction: column;
-        max-width: 80%;
+        flex-direction: row;
+        align-items: flex-end;
+        gap: 8px;
+        max-width: 90%;
     }}
     .msg-wrapper.right {{
         align-self: flex-end;
+        flex-direction: row-reverse;
     }}
     .msg-wrapper.left {{
         align-self: flex-start;
@@ -134,36 +133,66 @@ custom_css = f"""
 
     /* BUBBLE STYLES */
     .chat-bubble {{
-        padding: 16px 20px;
-        border-radius: 15px;
-        font-size: 15.5px;
-        line-height: 1.5;
+        padding: 15px;
+        font-size: 15px;
+        line-height: 1.4;
         color: #E2E8F0;
-        background: rgba(25, 35, 55, 0.5);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        position: relative;
     }}
     .chat-bubble.user {{
-        border: 1px solid rgba(0, 191, 255, 0.3);
-        box-shadow: 0 0 15px rgba(0, 191, 255, 0.05);
+        background: linear-gradient(135deg, #d946ef, #8b5cf6);
+        border-radius: 20px 20px 5px 20px; /* Sharp bottom-right */
+        box-shadow: 0 4px 15px rgba(217, 70, 239, 0.2);
     }}
     .chat-bubble.bot {{
-        border: 1px solid rgba(0, 255, 127, 0.3);
-        box-shadow: 0 0 15px rgba(0, 255, 127, 0.05);
+        background: #1C1C1E;
+        border-radius: 20px 20px 20px 5px; /* Sharp bottom-left */
+        border: 1px solid rgba(255,255,255,0.05);
+        color: #D4D4D4;
     }}
 
-    /* TIMESTAMP */
-    .timestamp {{
-        font-size: 12px;
-        color: rgba(255, 255, 255, 0.3);
-        margin-top: 8px;
-        text-align: right;
-        padding-right: 5px;
+    /* BOT ACTION ROW */
+    .bot-actions {{
+        display: flex;
+        gap: 15px;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        color: #888;
+        font-size: 16px;
+    }}
+    .bot-actions span {{
+        cursor: pointer;
+    }}
+    .bot-actions span:hover {{
+        color: #fff;
+    }}
+
+    /* AVATARS */
+    .avatar {{
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        flex-shrink: 0;
+    }}
+    .avatar.user-avatar {{
+        background: #444;
+        background-image: url('https://api.dicebear.com/7.x/avataaars/svg?seed=Imdu');
+        background-size: cover;
+    }}
+    .avatar.bot-avatar {{
+        background: transparent;
+        border: 1px solid #d946ef;
+        color: #d946ef;
     }}
 
     /* SCROLLBAR */
     ::-webkit-scrollbar {{
-        width: 8px;
+        width: 5px;
     }}
     ::-webkit-scrollbar-track {{
         background: transparent;
@@ -173,21 +202,17 @@ custom_css = f"""
         border-radius: 10px;
     }}
 
-    /* GLOWING INPUT BAR */
+    /* PILL INPUT BAR */
     .stChatInputContainer {{
-        border-radius: 30px !important;
-        border: 2px solid rgba(0, 255, 127, 0.5) !important;
-        background: rgba(10, 15, 30, 0.8) !important;
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
-        box-shadow: 0 0 25px rgba(0, 255, 127, 0.15), inset 0 0 10px rgba(0, 255, 127, 0.05);
-        padding-left: 10px;
-        padding-right: 5px;
+        border-radius: 40px !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        background: rgba(10, 10, 15, 0.9) !important;
+        padding-left: 15px;
+        padding-right: 15px;
         margin-bottom: 20px;
     }}
     .stChatInputContainer:focus-within {{
-        border: 2px solid #00BFFF !important;
-        box-shadow: 0 0 30px rgba(0, 191, 255, 0.25), inset 0 0 15px rgba(0, 191, 255, 0.1);
+        border: 1px solid #d946ef !important;
     }}
     
     /* Make standard Streamlit Markdown completely invisible to prevent ghosting */
@@ -252,34 +277,42 @@ elif feature in ["Chat", "PDF Q&A"]:
     # Generate custom HTML for the overarching chat window
     html_content = """<div class="glass-chat-window">
 <div class="chat-header">
-<h2>Imdu AI</h2>
-<div class="header-right">
-<div class="status-text"><span class="status-dot"></span> Online</div>
+<div class="header-left">❮</div>
+<div class="header-center">
+<h2>Text writer</h2>
+<span>Imdu AI</span>
 </div>
+<div class="header-right">⋮</div>
 </div>
 <div class="messages-container" id="chatbox">
 """
 
-    def generate_message_html(role, content, time_str):
+    def generate_message_html(role, content):
         if role == "user":
             return f"""<div class="msg-wrapper right">
+<div class="avatar user-avatar"></div>
 <div class="chat-bubble user">
 {content}
 </div>
-<div class="timestamp">{time_str}</div>
 </div>"""
         else:
             return f"""<div class="msg-wrapper left">
+<div class="avatar bot-avatar">✨</div>
 <div class="chat-bubble bot">
 {content}
+<div class="bot-actions">
+<span>⧉</span>
+<span>👍</span>
+<span>👎</span>
+<span>🔊</span>
+<span style="margin-left: auto;">↻</span>
 </div>
-<div class="timestamp">{time_str}</div>
+</div>
 </div>"""
 
     # Render history explicitly
     for ms in st.session_state.messages:
-        time_str = ms.get("time", datetime.now().strftime("%I:%M %p"))
-        html_content += generate_message_html(ms["role"], ms["content"], time_str)
+        html_content += generate_message_html(ms["role"], ms["content"])
 
     html_content += """</div>
 </div>"""
