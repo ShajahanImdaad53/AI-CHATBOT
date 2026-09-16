@@ -28,216 +28,210 @@ custom_css = f"""
 <style>
     /* Import new fonts */
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&display=swap');
-
-    html, body, [class*="css"] {{
-        font-family: 'Outfit', sans-serif !important;
-        background-color: #000000 !important;
-    }}
-
-    /* Solid Black with top-left purple glow */
-    .stApp {{
-        background: radial-gradient(circle at 0% 0%, #3a005c 0%, #000000 40%);
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-    }}
-
-    .stApp > header {{
-        background-color: transparent;
-    }}
-
-    /* Main Container overrides */
-    .main {{
-        padding-top: 1rem !important;
-        display: flex;
-        justify-content: center;
-    }}
-    
-    /* Responsive Desktop/Mobile Views */
-    @media (min-width: 768px) {{
-        .block-container {{
-            max-width: 900px !important; /* Desktop width */
-        }}
-        .glass-chat-window {{
-            border-radius: 20px;
-            height: 80vh;
-        }}
-    }}
-    @media (max-width: 767px) {{
-        .block-container {{
-            max-width: 100% !important; /* Mobile width */
-            padding-left: 0px !important;
-            padding-right: 0px !important;
-        }}
-        .glass-chat-window {{
-            border-radius: 0px; /* Flush to edges on mobile */
-            height: 85vh;
-            border-left: none;
-            border-right: none;
-        }}
-    }}
-
-    /* THE GLASS CHAT WINDOW */
-    .glass-chat-window {{
-        background: transparent;
-        border-radius: 20px;
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 90px;
-        height: 80vh;
-    }}
-
-    /* HEADER - exact match */
-    .chat-header {{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 10px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        background: transparent;
-    }}
-    .header-left {{
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        color: white;
-        font-size: 20px;
-        cursor: pointer;
-    }}
-    .header-center {{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }}
-    .header-center h2 {{
-        margin: 0;
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #ffffff;
-    }}
-    .header-center span {{
-        font-size: 0.8rem;
-        color: #A3A3A3;
-    }}
-    .header-right {{
-        color: white;
-        font-size: 20px;
-        cursor: pointer;
-    }}
-
-    /* MESSAGES AREA */
-    .messages-container {{
-        padding: 20px 10px;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        height: 100%;
-        overflow-x: hidden;
-    }}
-
-    /* BUBBLE WRAPPERS */
-    .msg-wrapper {{
-        display: flex;
-        flex-direction: row;
-        align-items: flex-end;
-        gap: 8px;
-        max-width: 90%;
-    }}
-    .msg-wrapper.right {{
-        align-self: flex-end;
-        flex-direction: row-reverse;
-    }}
-    .msg-wrapper.left {{
-        align-self: flex-start;
-    }}
-
-    /* BUBBLE STYLES */
-    .chat-bubble {{
-        padding: 15px;
-        font-size: 15px;
-        line-height: 1.4;
-        color: #E2E8F0;
-        position: relative;
-    }}
-    .chat-bubble.user {{
-        background: linear-gradient(135deg, #d946ef, #8b5cf6);
-        border-radius: 20px 20px 5px 20px; /* Sharp bottom-right */
-        box-shadow: 0 4px 15px rgba(217, 70, 239, 0.2);
-    }}
-    .chat-bubble.bot {{
-        background: #1C1C1E;
-        border-radius: 20px 20px 20px 5px; /* Sharp bottom-left */
-        border: 1px solid rgba(255,255,255,0.05);
-        color: #D4D4D4;
-    }}
-
-    /* BOT ACTION ROW */
-    .bot-actions {{
-        display: flex;
-        gap: 15px;
-        margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px solid rgba(255,255,255,0.05);
-        color: #888;
-        font-size: 16px;
-    }}
-    .bot-actions span {{
-        cursor: pointer;
-    }}
-    .bot-actions span:hover {{
-        color: #fff;
-    }}
-
-    /* AVATARS */
-    .avatar {{
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        flex-shrink: 0;
-    }}
-    .avatar.user-avatar {{
-        background: #444;
-        background-image: url('https://api.dicebear.com/7.x/avataaars/svg?seed=Imdu');
-        background-size: cover;
-    }}
-    .avatar.bot-avatar {{
-        background: transparent;
-        border: 1px solid #d946ef;
-        color: #d946ef;
-    }}
-
-    /* SCROLLBAR */
-    ::-webkit-scrollbar {{
-        width: 5px;
-    }}
-    ::-webkit-scrollbar-track {{
-        background: transparent;
-    }}
-    ::-webkit-scrollbar-thumb {{
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-    }}
-
-    /* PILL INPUT BAR */
-    .stChatInputContainer {{
-        border-radius: 40px !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        background: rgba(10, 10, 15, 0.9) !important;
-        padding-left: 15px;
-        padding-right: 15px;
-        margin-bottom: 20px;
-    }}
-    .stChatInputContainer:focus-within {{
-        border: 1px solid #d946ef !important;
-    }}
     
     /* Make standard Streamlit Markdown completely invisible to prevent ghosting */
     div[data-testid="stChatMessage"] {{ display: none !important; }}
+
+    /* =========================================
+       MOBILE VIEW (NEON APP CLONE)
+       ========================================= */
+    @media (max-width: 767px) {{
+        html, body, [class*="css"] {{
+            font-family: 'Outfit', sans-serif !important;
+            background-color: #000000 !important;
+        }}
+
+        .stApp {{
+            background: radial-gradient(circle at 0% 0%, #3a005c 0%, #000000 40%);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }}
+
+        .stApp > header {{ background-color: transparent; }}
+
+        .main {{ padding-top: 0 !important; }}
+        .block-container {{
+            max-width: 100% !important;
+            padding: 0 !important;
+        }}
+
+        .glass-chat-window {{
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 90px;
+            height: 85vh;
+        }}
+
+        .chat-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: transparent;
+        }}
+        .header-left, .header-right {{ color: white; font-size: 20px; }}
+        .header-center {{ display: flex; flex-direction: column; align-items: center; }}
+        .header-center h2 {{ margin: 0; font-size: 1.1rem; font-weight: 600; color: #ffffff; }}
+        .header-center span {{ font-size: 0.8rem; color: #A3A3A3; }}
+
+        .messages-container {{
+            padding: 20px 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 100%;
+        }}
+
+        .msg-wrapper {{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            gap: 8px;
+            max-width: 95%;
+        }}
+        .msg-wrapper.right {{ align-self: flex-end; flex-direction: row-reverse; }}
+        .msg-wrapper.left {{ align-self: flex-start; }}
+
+        .chat-bubble {{
+            padding: 15px;
+            font-size: 15px;
+            line-height: 1.4;
+            position: relative;
+        }}
+        .chat-bubble.user {{
+            background: linear-gradient(135deg, #d946ef, #8b5cf6);
+            border-radius: 20px 20px 5px 20px; 
+            color: #ffffff;
+        }}
+        .chat-bubble.bot {{
+            background: #1C1C1E;
+            border-radius: 20px 20px 20px 5px; 
+            border: 1px solid rgba(255,255,255,0.05);
+            color: #D4D4D4;
+        }}
+
+        .bot-actions {{
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #888;
+            font-size: 16px;
+        }}
+
+        .avatar {{
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }}
+        .avatar.user-avatar {{ background: #444; background-image: url('https://api.dicebear.com/7.x/avataaars/svg?seed=Imdu'); background-size: cover; }}
+        .avatar.bot-avatar {{ border: 1px solid #d946ef; color: #d946ef; font-size: 14px;}}
+
+        .stChatInputContainer {{
+            border-radius: 40px !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            background: rgba(10, 10, 15, 0.9) !important;
+            padding: 0 15px;
+            margin: 0 10px 20px 10px;
+        }}
+        .stChatInputContainer:focus-within {{ border: 1px solid #d946ef !important; }}
+    }}
+
+    /* =========================================
+       DESKTOP VIEW (GEMINI CLONE)
+       ========================================= */
+    @media (min-width: 768px) {{
+        html, body, [class*="css"] {{
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+            background-color: #131314 !important;
+        }}
+        
+        .stApp {{ background: #131314 !important; }}
+        .stApp > header {{ background-color: transparent; }}
+
+        .main {{ padding-top: 2rem !important; display: flex; justify-content: center; }}
+        .block-container {{ max-width: 900px !important; }}
+
+        .glass-chat-window {{
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 90px;
+            height: 80vh;
+        }}
+        
+        .chat-header {{ display: none !important; }}
+
+        .messages-container {{
+            padding: 20px 40px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            height: 100%;
+        }}
+
+        .msg-wrapper {{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 16px;
+            max-width: 85%;
+        }}
+        .msg-wrapper.right {{ align-self: flex-end; flex-direction: row-reverse; }}
+        .msg-wrapper.left {{ align-self: flex-start; }}
+
+        .chat-bubble {{
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e3e3e3;
+        }}
+        .chat-bubble.user {{
+            background: #282a2c;
+            border-radius: 24px;
+            padding: 12px 24px;
+        }}
+        .chat-bubble.bot {{
+            background: transparent;
+            padding: 0;
+            padding-top: 5px;
+        }}
+
+        .bot-actions {{ display: none !important; }}
+
+        .avatar {{
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }}
+        .avatar.user-avatar {{ display: none; }}
+        .avatar.bot-avatar {{ 
+            background: #1e1f20; 
+            color: #a8c7fa; 
+            font-size: 20px;
+        }}
+
+        .stChatInputContainer {{
+            background: #1e1f20 !important;
+            border: 1px solid #444 !important;
+            border-radius: 30px !important;
+            box-shadow: none !important;
+            padding: 0 15px;
+        }}
+    }}
 </style>
 """
 
