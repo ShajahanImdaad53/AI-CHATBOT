@@ -39,31 +39,35 @@ custom_css = f"""
         background-color: #09090b !important;
         border-right: 1px solid rgba(255,255,255,0.05) !important;
     }}
-    [data-testid="stSidebar"] .stRadio > div[role="radiogroup"] > label {{
+    [data-testid="stSidebar"] div[role="radiogroup"] > label {{
         font-size: 16px !important;
-        font-weight: 500 !important;
-        padding: 14px 20px !important;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        margin-bottom: 10px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        width: 100%;
-        display: flex;
-        align-items: center;
+        font-weight: 600 !important;
+        padding: 16px 20px !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+        margin-bottom: 12px !important;
+        transition: all 0.3s ease !important;
+        cursor: pointer !important;
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        color: #ffffff !important;
     }}
-    [data-testid="stSidebar"] .stRadio > div[role="radiogroup"] > label:hover {{
-        background: rgba(217, 70, 239, 0.1);
-        border-color: rgba(217, 70, 239, 0.3);
-        transform: translateY(-2px);
+    [data-testid="stSidebar"] div[role="radiogroup"] > label:hover {{
+        background: rgba(217, 70, 239, 0.2) !important;
+        border-color: rgba(217, 70, 239, 0.5) !important;
+        transform: translateY(-2px) !important;
     }}
     /* Hide default radio circle */
-    [data-testid="stSidebar"] .stRadio > div[role="radiogroup"] > label > div:first-child {{
+    [data-testid="stSidebar"] div[role="radiogroup"] > label > div:first-child {{
         display: none !important; 
     }}
-    [data-testid="stSidebar"] .stRadio > div[role="radiogroup"] {{
+    [data-testid="stSidebar"] div[role="radiogroup"] {{
         gap: 0px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
     }}
 
     /* =========================================
