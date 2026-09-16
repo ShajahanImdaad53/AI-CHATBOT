@@ -1,5 +1,5 @@
 import streamlit as st
-from groq import Groq
+import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 import base64
@@ -201,16 +201,17 @@ load_dotenv(override=True)
 
 # First try to get the API key from Streamlit secrets, then fallback to environment variables (.env)
 try:
-    api_key = st.secrets.get("GROQ_API_KEY", os.getenv("GROQ_API_KEY"))
+    api_key = st.secrets.get("GEMINI_API_KEY", os.getenv("GEMINI_API_KEY"))
 except Exception:
-    api_key = os.getenv("GROQ_API_KEY")
+    api_key = os.getenv("GEMINI_API_KEY")
 
 try:
     if not api_key:
-        raise ValueError("API Key is missing. Please set GROQ_API_KEY in .env or Streamlit secrets.")
-    client = Groq(api_key=api_key)
+        raise ValueError("API Key is missing. Please set GEMINI_API_KEY in .env or Streamlit secrets.")
+    genai.configure(api_key=api_key)
+    client = True
 except Exception as e:
-    st.error(f"Error initializing Groq client: {str(e)}")
+    st.error(f"Error initializing Gemini client: {str(e)}")
     client = None
 
 if "messages" not in st.session_state:
@@ -299,24 +300,23 @@ elif feature in ["Chat", "PDF Q&A"]:
     if st.session_state.messages and st.session_state.messages[-1]["role"] == "user" and client:
         try:
             with st.spinner("Imdu AI is typing..."):
-                system_prompt = {
-                    "role": "system", 
-                    "content": "Your name is Imdu AI. You were created by Imdaad Shajahan. Do not mention Meta or any other creator. Be helpful and intelligent."
-                }
+                system_instruction = "Your name is Imdu AI. You were created by Imdaad Shajahan. Do not mention Meta or any other creator. Be helpful and intelligent."
                 
                 if st.session_state.pdf_context:
-                    system_prompt["content"] += f"\n\nHere is context from an uploaded document that the user might refer to:\n{st.session_state.pdf_context}"
+                    system_instruction += f"\n\nHere is context from an uploaded document that the user might refer to:\n{st.session_state.pdf_context}"
 
-                messages_for_api = [system_prompt] + [
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ]
-
-                res = client.chat.completions.create(
-                    model="llama3-8b-8192",
-                    messages=messages_for_api,
+                model = genai.GenerativeModel(
+                    model_name="gemini-1.5-pro",
+                    system_instruction=system_instruction
                 )
-                reply = res.choices[0].message.content
+
+                contents = []
+                for m in st.session_state.messages:
+                    role = "user" if m["role"] == "user" else "model"
+                    contents.append({"role": role, "parts": [m["content"]]})
+
+                res = model.generate_content(contents)
+                reply = res.text
             
             current_time = datetime.now().strftime("%I:%M %p")
             st.session_state.messages.append({"role": "assistant", "content": reply, "time": current_time})
