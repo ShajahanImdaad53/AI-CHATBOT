@@ -7,6 +7,7 @@ import base64
 from datetime import datetime
 import pypdf
 from urllib.parse import quote
+from streamlit_option_menu import option_menu
 
 # SET PAGE CONFIG FIRST!
 st.set_page_config(page_title="Imdu AI", page_icon="🤖", layout="wide")
@@ -297,8 +298,29 @@ if "messages" not in st.session_state:
 if "pdf_context" not in st.session_state:
     st.session_state.pdf_context = ""
 
-st.sidebar.title("✨ Imdu AI Features")
-feature = st.sidebar.radio("Navigate", ["Chat", "PDF Q&A", "Image Generation"])
+with st.sidebar:
+    st.markdown("<h1 style='text-align: center; font-size: 32px; font-weight: 800; background: -webkit-linear-gradient(#d946ef, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;'>✨ Imdu AI</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #888; font-size: 14px; margin-bottom: 20px;'>Your Multimodal Assistant</p>", unsafe_allow_html=True)
+    
+    feature = option_menu(
+        menu_title=None,
+        options=["Chat", "PDF Q&A", "Image Generation"],
+        icons=["chat-dots-fill", "file-earmark-pdf-fill", "image-fill"],
+        menu_icon="cast",
+        default_index=0,
+        styles={
+            "container": {"padding": "0!important", "background-color": "transparent"},
+            "icon": {"color": "#d946ef", "font-size": "20px"},
+            "nav-link": {
+                "font-size": "18px", 
+                "font-weight": "bold", 
+                "text-align": "left", 
+                "margin": "0px", 
+                "--hover-color": "rgba(217, 70, 239, 0.1)"
+            },
+            "nav-link-selected": {"background-color": "rgba(217, 70, 239, 0.2)", "color": "#d946ef"},
+        }
+    )
 
 if feature == "PDF Q&A":
     st.sidebar.markdown("---")
